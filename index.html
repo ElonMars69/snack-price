@@ -4,132 +4,57 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>小吃店算價：這道菜到底該賣多少</title>
-  <meta name="description" content="輸入進貨價跟用量，算出一份成本、毛利與建議售價。" />
   <style>
-    :root {
-      --bg: #f6f1e8;
-      --card: #fffdf8;
-      --ink: #1c1712;
-      --muted: #6b5e52;
-      --line: #e6d9c8;
-      --accent: #c45c26;
-      --accent-dark: #9a3f14;
-      --ok: #2f6b3a;
-      --warn: #9a3f14;
-    }
+    :root { --bg:#f6f1e8; --card:#fffdf8; --ink:#1c1712; --muted:#6b5e52; --line:#e6d9c8; --accent:#c45c26; --accent-dark:#9a3f14; --ok:#2f6b3a; --warn:#9a3f14; }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      line-height: 1.5;
-    }
-    header, main, footer { width: min(640px, 100%); margin: 0 auto; }
-    header { padding: 28px 20px 8px; }
-    h1 { font-size: 1.55rem; margin: 0 0 8px; letter-spacing: 0.02em; }
-    .lead { color: var(--muted); margin: 0; }
-    main { padding: 12px 16px 48px; }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px;
-      margin-top: 12px;
-    }
-    label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 4px; }
-    input, select {
-      width: 100%;
-      font: inherit;
-      padding: 10px 12px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: #fff;
-      color: var(--ink);
-    }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-    .row3 { display: grid; grid-template-columns: 1.2fr 0.8fr 0.8fr 0.8fr; gap: 8px; }
-    @media (max-width: 560px) {
-      .row3 { grid-template-columns: 1fr 1fr; }
-      .row3 .name { grid-column: 1 / -1; }
-    }
-    h2 { font-size: 1rem; margin: 0 0 10px; }
-    .ing {
-      border-top: 1px dashed var(--line);
-      padding-top: 12px;
-      margin-top: 12px;
-    }
-    .ing:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
-    button {
-      font: inherit;
-      border: 0;
-      border-radius: 999px;
-      padding: 12px 16px;
-      cursor: pointer;
-    }
-    .primary {
-      width: 100%;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 650;
-      margin-top: 16px;
-    }
-    .primary:active { background: var(--accent-dark); }
-    .ghost {
-      background: transparent;
-      color: var(--accent-dark);
-      padding: 8px 0;
-    }
-    #result { display: none; }
-    #result.show { display: block; }
-    .nums { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .num {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 12px;
-    }
-    .num b { display: block; font-size: 1.35rem; }
-    .hint { margin: 12px 0 0; font-size: 0.95rem; }
-    .hint.bad { color: var(--warn); }
-    .hint.good { color: var(--ok); }
-    footer { padding: 0 20px 32px; color: var(--muted); font-size: 0.8rem; }
+    body { margin:0; font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif; background:var(--bg); color:var(--ink); line-height:1.5; }
+    header, main, footer { width:min(640px,100%); margin:0 auto; }
+    header { padding:28px 20px 8px; }
+    h1 { font-size:1.55rem; margin:0 0 8px; }
+    .lead { color:var(--muted); margin:0; }
+    main { padding:12px 16px 48px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; margin-top:12px; }
+    label { display:block; font-size:0.85rem; color:var(--muted); margin-bottom:4px; }
+    input { width:100%; font:inherit; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:#fff; color:var(--ink); }
+    .row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+    .row3 { display:grid; grid-template-columns:1.2fr 0.8fr 0.8fr 0.8fr; gap:8px; }
+    @media (max-width:560px) { .row3 { grid-template-columns:1fr 1fr; } .row3 .name { grid-column:1/-1; } }
+    h2 { font-size:1rem; margin:0 0 10px; }
+    .ing { border-top:1px dashed var(--line); padding-top:12px; margin-top:12px; }
+    .ing:first-of-type { border-top:0; padding-top:0; margin-top:0; }
+    button { font:inherit; border:0; border-radius:999px; padding:12px 16px; cursor:pointer; }
+    .primary { width:100%; background:var(--accent); color:#fff; font-weight:650; margin-top:16px; }
+    .ghost { background:transparent; color:var(--accent-dark); padding:8px 0; }
+    #result { display:none; } #result.show { display:block; }
+    .nums { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .num { background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px; }
+    .num b { display:block; font-size:1.35rem; }
+    .hint { margin:12px 0 0; } .hint.bad { color:var(--warn); } .hint.good { color:var(--ok); }
+    footer { padding:0 20px 32px; color:var(--muted); font-size:0.8rem; }
   </style>
 </head>
 <body>
   <header>
     <h1>小吃店算價</h1>
-    <p class="lead">輸入進貨價跟用量，1 分鐘看到這份成本、毛利、建議售價。</p>
+    <p class="lead">台式肉圓材料已先填好。請改成店裡實際進價後按「算出來」。</p>
   </header>
   <main>
     <form id="form" class="card" onsubmit="return calc(event)">
       <h2>這道菜</h2>
       <label for="name">菜名</label>
-      <input id="name" value="滷肉飯" autocomplete="off" />
+      <input id="name" value="台式肉圓（2顆）" />
       <div class="row">
-        <div>
-          <label for="price">現在售價（元）</label>
-          <input id="price" type="number" inputmode="decimal" min="0" step="1" value="50" />
-        </div>
-        <div>
-          <label for="margin">目標毛利率（%）</label>
-          <input id="margin" type="number" inputmode="decimal" min="0" max="95" step="1" value="60" />
-        </div>
+        <div><label for="price">現在售價（元）</label><input id="price" type="number" inputmode="decimal" min="0" value="45" /></div>
+        <div><label for="margin">目標毛利率（%）</label><input id="margin" type="number" inputmode="decimal" min="0" max="95" value="60" /></div>
       </div>
-      <h2 style="margin-top:20px">食材（這一份用掉多少）</h2>
-      <p class="lead" style="margin-bottom:10px">進貨量跟進貨價用你實際買的單位，例如 600 克花 90 元。</p>
+      <h2 style="margin-top:20px">食材（一份 2 顆）</h2>
+      <p class="lead" style="margin-bottom:10px">進貨價是示意價，請改成你們買的價錢。進貨量與用量要用同一單位（克或兌升）。</p>
       <div id="ings"></div>
       <button type="button" class="ghost" onclick="addIng()">＋ 再加一列食材</button>
       <h2 style="margin-top:16px">常被漏算</h2>
       <div class="row">
-        <div>
-          <label for="pack">這份包裝／免洗餐具（元）</label>
-          <input id="pack" type="number" inputmode="decimal" min="0" step="0.1" value="3" />
-        </div>
-        <div>
-          <label for="energy">這份瓦斯／電（元，可 0）</label>
-          <input id="energy" type="number" inputmode="decimal" min="0" step="0.1" value="2" />
-        </div>
+        <div><label for="pack">這份紙盒／簿子（元）</label><input id="pack" type="number" inputmode="decimal" min="0" step="0.1" value="4" /></div>
+        <div><label for="energy">這份蒸煮瓦斯／電（元）</label><input id="energy" type="number" inputmode="decimal" min="0" step="0.1" value="3" /></div>
       </div>
       <button class="primary" type="submit">算出來</button>
     </form>
@@ -144,61 +69,35 @@
       <p class="hint" id="oHint"></p>
     </section>
   </main>
-  <footer>
-    試算版：數字只留在這台手機，不會上傳。公式：單項成本 = 進貨價 ÷ 進貨量 × 這份用量。
-  </footer>
+  <footer>試算版：數字留在手機本機。一份以 2 顆肉圓估算。</footer>
   <script>
     const DEFAULTS = [
-      { name: "滷肉／肉燥", buyQty: 600, buyCost: 180, useQty: 80 },
-      { name: "白飯", buyQty: 1000, buyCost: 35, useQty: 200 },
-      { name: "醃漬菜／配菜", buyQty: 500, buyCost: 40, useQty: 30 },
-      { name: "油葵／調味", buyQty: 200, buyCost: 30, useQty: 8 },
-      { name: "", buyQty: "", buyCost: "", useQty: "" }
+      { name: "在來米粉（皮）", buyQty: 600, buyCost: 48, useQty: 40 },
+      { name: "澄粉（皮）", buyQty: 500, buyCost: 42, useQty: 25 },
+      { name: "太白粉（皮）", buyQty: 400, buyCost: 36, useQty: 15 },
+      { name: "豬油／油（皮）", buyQty: 600, buyCost: 85, useQty: 8 },
+      { name: "豬絞肉（館）", buyQty: 600, buyCost: 165, useQty: 50 },
+      { name: "香菇（館）", buyQty: 200, buyCost: 90, useQty: 10 },
+      { name: "筍乾（館）", buyQty: 300, buyCost: 65, useQty: 15 },
+      { name: "醬油／調味（館）", buyQty: 1000, buyCost: 45, useQty: 8 },
+      { name: "肉圓醬／甜醬", buyQty: 1000, buyCost: 70, useQty: 25 },
+      { name: "蒜泥／香菜", buyQty: 200, buyCost: 30, useQty: 8 }
     ];
     function ingHtml(item = {}) {
-      return `<div class="ing">
-        <div class="row3">
-          <div class="name">
-            <label>食材</label>
-            <input class="i-name" value="${item.name ?? ""}" placeholder="例如里肌肉" />
-          </div>
-          <div>
-            <label>進貨量</label>
-            <input class="i-buyqty" type="number" inputmode="decimal" min="0" step="0.01" value="${item.buyQty ?? ""}" placeholder="600" />
-          </div>
-          <div>
-            <label>進貨價</label>
-            <input class="i-buycost" type="number" inputmode="decimal" min="0" step="0.01" value="${item.buyCost ?? ""}" placeholder="90" />
-          </div>
-          <div>
-            <label>這份用量</label>
-            <input class="i-useqty" type="number" inputmode="decimal" min="0" step="0.01" value="${item.useQty ?? ""}" placeholder="80" />
-          </div>
-        </div>
-      </div>`;
+      return `<div class="ing"><div class="row3"><div class="name"><label>食材</label><input class="i-name" value="${item.name ?? ""}" /></div><div><label>進貨量</label><input class="i-buyqty" type="number" inputmode="decimal" min="0" step="0.01" value="${item.buyQty ?? ""}" /></div><div><label>進貨價</label><input class="i-buycost" type="number" inputmode="decimal" min="0" step="0.01" value="${item.buyCost ?? ""}" /></div><div><label>這份用量</label><input class="i-useqty" type="number" inputmode="decimal" min="0" step="0.01" value="${item.useQty ?? ""}" /></div></div></div>`;
     }
-    function addIng(item) {
-      document.getElementById("ings").insertAdjacentHTML("beforeend", ingHtml(item));
-    }
+    function addIng(item) { document.getElementById("ings").insertAdjacentHTML("beforeend", ingHtml(item)); }
     DEFAULTS.forEach(addIng);
-    function n(el) {
-      const v = parseFloat(el.value);
-      return Number.isFinite(v) ? v : 0;
-    }
-    function money(v) {
-      return Math.round(v * 10) / 10;
-    }
+    function n(el) { const v = parseFloat(el.value); return Number.isFinite(v) ? v : 0; }
+    function money(v) { return Math.round(v * 10) / 10; }
     function calc(e) {
       e.preventDefault();
-      const blocks = [...document.querySelectorAll(".ing")];
       let food = 0;
-      blocks.forEach((b) => {
+      document.querySelectorAll(".ing").forEach((b) => {
         const buyQty = n(b.querySelector(".i-buyqty"));
         const buyCost = n(b.querySelector(".i-buycost"));
         const useQty = n(b.querySelector(".i-useqty"));
-        if (buyQty > 0 && buyCost >= 0 && useQty > 0) {
-          food += (buyCost / buyQty) * useQty;
-        }
+        if (buyQty > 0 && useQty > 0) food += (buyCost / buyQty) * useQty;
       });
       const cost = food + n(document.getElementById("pack")) + n(document.getElementById("energy"));
       const price = n(document.getElementById("price"));
@@ -208,27 +107,15 @@
       const suggest = target >= 1 ? cost : cost / (1 - target);
       document.getElementById("oCost").textContent = money(cost) + " 元";
       document.getElementById("oProfit").textContent = money(profit) + " 元";
-      document.getElementById("oRate").textContent = price > 0 ? Math.round(rate * 1000) / 10 + "%" : "—";
+      document.getElementById("oRate").textContent = price > 0 ? (Math.round(rate * 1000) / 10) + "%" : "—";
       document.getElementById("oSuggest").textContent = money(suggest) + " 元";
-      const dish = document.getElementById("name").value.trim() || "這道菜";
-      document.getElementById("resultTitle").textContent = dish + " 試算";
+      document.getElementById("resultTitle").textContent = (document.getElementById("name").value.trim() || "肉圓") + " 試算";
       const hint = document.getElementById("oHint");
-      if (price <= 0) {
-        hint.className = "hint";
-        hint.textContent = "還沒填售價。若要毛利 " + (target * 100) + "%，建議至少賣 " + money(suggest) + " 元。";
-      } else if (profit <= 0) {
-        hint.className = "hint bad";
-        hint.textContent = "以現在 " + price + " 元在賠。要維持目標毛利，至少賣 " + money(suggest) + " 元。";
-      } else if (rate + 0.001 < target) {
-        hint.className = "hint bad";
-        hint.textContent = "賣 " + price + " 元，一份賺 " + money(profit) + " 元。毛利低於目標，建議至少賣 " + money(suggest) + " 元。";
-      } else {
-        hint.className = "hint good";
-        hint.textContent = "賣 " + price + " 元，一份賺 " + money(profit) + " 元，有達到目標毛利。";
-      }
-      const box = document.getElementById("result");
-      box.classList.add("show");
-      box.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (price <= 0) { hint.className = "hint"; hint.textContent = "還沒填售價。建議至少賣 " + money(suggest) + " 元。"; }
+      else if (profit <= 0) { hint.className = "hint bad"; hint.textContent = "以現在 " + price + " 元在賠。建議至少賣 " + money(suggest) + " 元。"; }
+      else if (rate + 0.001 < target) { hint.className = "hint bad"; hint.textContent = "賣 " + price + " 元，一份賺 " + money(profit) + " 元。毛利低於目標，建議至少賣 " + money(suggest) + " 元。"; }
+      else { hint.className = "hint good"; hint.textContent = "賣 " + price + " 元，一份賺 " + money(profit) + " 元，有達到目標毛利。"; }
+      const box = document.getElementById("result"); box.classList.add("show"); box.scrollIntoView({ behavior: "smooth" });
       return false;
     }
   </script>
