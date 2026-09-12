@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小吃店算價：這道菜到底該賣多少</title>
+  <title>李爸肉圓算價</title>
   <style>
     :root { --bg:#f6f1e8; --card:#fffdf8; --ink:#1c1712; --muted:#6b5e52; --line:#e6d9c8; --accent:#c45c26; --accent-dark:#9a3f14; --ok:#2f6b3a; --warn:#9a3f14; }
     * { box-sizing: border-box; }
@@ -35,20 +35,20 @@
 </head>
 <body>
   <header>
-    <h1>小吃店算價</h1>
-    <p class="lead">台式肉圓材料已先填好。請改成店裡實際進價後按「算出來」。</p>
+    <h1>李爸肉圓</h1>
+    <p class="lead">一份 2 顆、賣 50 元。請改成店裡實際進價後按「算出來」。</p>
   </header>
   <main>
     <form id="form" class="card" onsubmit="return calc(event)">
       <h2>這道菜</h2>
       <label for="name">菜名</label>
-      <input id="name" value="台式肉圓（2顆）" />
+      <input id="name" value="李爸肉圓（2顆）" />
       <div class="row">
-        <div><label for="price">現在售價（元）</label><input id="price" type="number" inputmode="decimal" min="0" value="45" /></div>
+        <div><label for="price">現在售價（元）</label><input id="price" type="number" inputmode="decimal" min="0" value="50" /></div>
         <div><label for="margin">目標毛利率（%）</label><input id="margin" type="number" inputmode="decimal" min="0" max="95" value="60" /></div>
       </div>
       <h2 style="margin-top:20px">食材（一份 2 顆）</h2>
-      <p class="lead" style="margin-bottom:10px">進貨價是示意價，請改成你們買的價錢。進貨量與用量要用同一單位（克或兌升）。</p>
+      <p class="lead" style="margin-bottom:10px">進貨價是示意價，請改成你們買的價錢。</p>
       <div id="ings"></div>
       <button type="button" class="ghost" onclick="addIng()">＋ 再加一列食材</button>
       <h2 style="margin-top:16px">常被漏算</h2>
@@ -69,7 +69,7 @@
       <p class="hint" id="oHint"></p>
     </section>
   </main>
-  <footer>試算版：數字留在手機本機。一份以 2 顆肉圓估算。</footer>
+  <footer>李爸肉圓試算。數字留在手機本機。</footer>
   <script>
     const DEFAULTS = [
       { name: "在來米粉（皮）", buyQty: 600, buyCost: 48, useQty: 40 },
@@ -109,7 +109,7 @@
       document.getElementById("oProfit").textContent = money(profit) + " 元";
       document.getElementById("oRate").textContent = price > 0 ? (Math.round(rate * 1000) / 10) + "%" : "—";
       document.getElementById("oSuggest").textContent = money(suggest) + " 元";
-      document.getElementById("resultTitle").textContent = (document.getElementById("name").value.trim() || "肉圓") + " 試算";
+      document.getElementById("resultTitle").textContent = (document.getElementById("name").value.trim() || "李爸肉圓") + " 試算";
       const hint = document.getElementById("oHint");
       if (price <= 0) { hint.className = "hint"; hint.textContent = "還沒填售價。建議至少賣 " + money(suggest) + " 元。"; }
       else if (profit <= 0) { hint.className = "hint bad"; hint.textContent = "以現在 " + price + " 元在賠。建議至少賣 " + money(suggest) + " 元。"; }
